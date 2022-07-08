@@ -26,7 +26,7 @@ export default {
     console.log("Route", Route);
     console.log("queryObj", queryObj[Route.params.path]);
     let myAxios = new MyAxios();
-    myAxios.request(url).then((data) => {
+    myAxios.request({ url }).then((data) => {
       console.log("data", data);
     });
     return {
