@@ -10,6 +10,12 @@ const userArray: Array<myObj> = [
   { name: "userPassword", label: "用户密码", type: "string" },
 ]
 
+const emergeArray: Array<myObj> = [
+  { name: "emergeId", label: "分类ID", type: "number" },
+  { name: "emergeTag", label: "分类名", type: "string" },
+]
+
+
 const productArray: Array<myObj> = [
   { name: "productName", label: "商品名称", type: "string" },
   { name: "productMsg", label: "商品信息", type: "string" },
@@ -32,6 +38,7 @@ const getParam = (strArr: Array<string>, objArr: Array<myObj>,): Array<myObj> =>
 }
 
 const queryObj: object = {
-  "queryAllUser": { param: getParam(["userId", "userName", "userPassword"], userArray) }
+  "queryAllUser": { param: getParam(["userId", "userName", "userPassword"], userArray) },
+  "queryAllEmerge": { param: getParam(["emergeId", "emergeTag"], emergeArray) },
 }
 module.exports = { queryObj }
