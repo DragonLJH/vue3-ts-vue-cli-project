@@ -41,4 +41,5 @@ const queryObj: object = {
   "queryAllUser": { param: getParam(["userId", "userName", "userPassword"], userArray) },
   "queryAllEmerge": { param: getParam(["emergeId", "emergeTag"], emergeArray) },
 }
+
 module.exports = { queryObj }

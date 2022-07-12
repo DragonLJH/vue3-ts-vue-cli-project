@@ -53,6 +53,9 @@ class Request {
   get(url: string, config: AxiosRequestConfig) {
     return this.instance.get(url, config)
   }
+  post(url: string, config: AxiosRequestConfig) {
+    return this.instance.post(url, config)
+  }
 }
 
 export default Request 

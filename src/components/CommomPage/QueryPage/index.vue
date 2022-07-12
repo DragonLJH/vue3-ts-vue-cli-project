@@ -17,7 +17,7 @@
       <h4>新增</h4>
     </template>
     <template #default>
-      <div>新增</div>
+      <MyForm :formObj="mainObj.param" />
     </template>
     <template #footer>
       <div style="flex: auto">
@@ -32,28 +32,21 @@
 import { reactive, toRefs, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { queryObj } from "./config";
-import MyAxios from "@/axios/index";
+import MyForm from "./myForm.vue";
+import { queryAllMsg } from "@/api/index";
 export default {
   name: "QueryPage",
+  components: { MyForm },
   setup() {
     const Route = useRoute(); //获取到值
     const { url, label, path, title } = Route.query;
     const mainObj = reactive(queryObj[Route.params.path]);
     const mainData = reactive({ tableData: [] });
     const drawer = ref(false);
-    console.log("Route.fullPath", Route.fullPath);
-    console.log("Route.hash", Route.hash);
-    console.log("Route.matched", Route.matched);
-    console.log("Route.meta", Route.meta);
-    console.log("Route.name", Route.name);
-    console.log("Route.params", Route.params);
-    console.log("Route.path", Route.path);
-    console.log("Route.query", Route.query);
-    console.log("Route.redirectedFrom", Route.redirectedFrom);
     console.log("Route", Route);
+    console.log("url", url);
     console.log("queryObj", queryObj[Route.params.path]);
-    let myAxios = new MyAxios();
-    myAxios.request({ url }).then(function (data) {
+    queryAllMsg(url).then(function (data) {
       mainData.tableData = data;
       console.log("myAxios", data);
     });

@@ -13,6 +13,7 @@
     "element-plus": "^2.2.8",
     "element-ui": "^2.15.9",
     "qs": "^6.11.0",
+    "unplugin-element-plus": "^0.4.1",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
