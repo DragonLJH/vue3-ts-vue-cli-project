@@ -17,32 +17,46 @@
       <h4>新增</h4>
     </template>
     <template #default>
-      <MyForm :formObj="mainObj.param" />
+      <el-form :model="mainObj.param" label-width="100px">
+        <template v-for="(item, index) in mainObj.param" :key="index">
+          <el-form-item :label="item.label" v-if="item?.value != undefined">
+            <MyFormItem :item="item" />
+          </el-form-item>
+        </template>
+      </el-form>
+      <!-- <MyForm :formObj="mainObj.param" /> -->
+      <!-- <MyUpload /> -->
     </template>
     <template #footer>
       <div style="flex: auto">
         <el-button>取消</el-button>
-        <el-button type="primary">提交</el-button>
+        <el-button type="primary" @click="mySubmitFun">提交</el-button>
       </div>
     </template>
   </el-drawer>
 </template>
 
 <script>
-import { reactive, toRefs, ref } from "vue";
+import { defineComponent, reactive, toRefs, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { queryObj } from "./config";
 import MyForm from "./myForm.vue";
+import MyFormItem from "./myFormItem.vue";
+import MyUpload from "./myUpload.vue";
 import { queryAllMsg } from "@/api/index";
-export default {
+export default defineComponent({
   name: "QueryPage",
-  components: { MyForm },
+  components: { MyForm, MyFormItem, MyUpload },
   setup() {
     const Route = useRoute(); //获取到值
     const { url, label, path, title } = Route.query;
     const mainObj = reactive(queryObj[Route.params.path]);
     const mainData = reactive({ tableData: [] });
     const drawer = ref(false);
+
+    function mySubmitFun() {
+      console.log("mySubmitFun", mainObj);
+    }
     console.log("Route", Route);
     console.log("url", url);
     console.log("queryObj", queryObj[Route.params.path]);
@@ -56,9 +70,10 @@ export default {
       mainObj,
       mainData,
       drawer,
+      mySubmitFun,
     };
   },
-};
+});
 </script>
 
 <style>

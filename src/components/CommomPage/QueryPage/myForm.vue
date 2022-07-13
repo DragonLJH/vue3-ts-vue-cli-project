@@ -15,7 +15,7 @@ export default {
     ElInput,
     ElInputNumber,
   },
-  setup(props:any, context) {
+  setup(props: any) {
     const { formObj } = props;
     const form = reactive(Object.create({}));
     formObj.forEach((val: myFormObj) => {
@@ -24,7 +24,7 @@ export default {
       form[key] = value;
     });
     console.log("formObj", formObj);
-    const inputName = (key: string) => {
+    const inputName = (key: string): any => {
       switch (key) {
         case "string":
           return ElInput;
@@ -39,7 +39,7 @@ export default {
       return h(ElFormItem, { ...val }, [
         h(inputName(val.type), {
           value,
-          onInput: function(e: string | number) { 
+          onInput: function (e: string | number) {
             value = e;
             form[val.name] = e;
           },
