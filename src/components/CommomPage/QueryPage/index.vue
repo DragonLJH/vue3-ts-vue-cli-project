@@ -1,8 +1,31 @@
 <template>
-  <el-table :data="tableData" style="width: 100%" max-height="250">
+  <el-table :data="tableData" style="width: 100%" max-height="400">
     <template v-for="(item, index) in mainObj.param" :key="index">
-      <el-table-column :prop="item.name" :label="item.label" />
+      <!-- <el-table-column :prop="item.name" :label="item.label" /> -->
+      <el-table-column :label="item.label">
+        <template #default="scope">
+          <span v-if="item.name.indexOf('Img') != -1" style="margin-left: 10px"> 
+            <el-image
+              v-if="typeof scope.row[item.name] === 'string'" 
+              style="width: 100px; height: 100px"
+              :src="scope.row[item.name]"
+              fit="cover"
+            />
+            <el-image
+              v-else
+              style="width: 100px; height: 100px"
+              :src="scope.row[item.name][0]"
+              :preview-src-list="scope.row[item.name]"
+              fit="cover"
+            />
+          </span>
+          <span v-else style="margin-left: 10px">{{
+            scope.row[item.name]
+          }}</span>
+        </template>
+      </el-table-column>
     </template>
+
     <el-table-column fixed="right" label="操作" width="150">
       <template #default>
         <el-button link type="primary" size="small">删除</el-button>
