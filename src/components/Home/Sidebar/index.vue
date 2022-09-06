@@ -59,8 +59,9 @@ const menuItemClick = (data: MenuItem, val: object) => {
     index,
     indexPath,
   }: { active: object; index: string; indexPath: object } = data;
-  router.push({ path: val.path + "/" + val.title, query: { ...val } });
-  console.log(data, active, index, indexPath, val);
+  router.push({ name: val.path + "/" + val.title, params: { ...val } });
+  // router.push({ name: val.path, params: { path: val.title, ...val } });
+  console.log("menuItemClick", data, active, index, indexPath, val);
 };
 </script>
 <style scoped>

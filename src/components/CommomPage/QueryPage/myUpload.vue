@@ -1,22 +1,19 @@
 <template>
-  <el-upload
-    v-model:file-list="fileList"
-    name="uploadProductRotationImg"
-    class="upload-demo"
-    action="/api/product/uploadProductRotationImg"
-    :on-progress="handleProgress"
-    :on-success="handleSuccess"
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    list-type="picture"
-  >
-    <el-button type="primary">Click to upload</el-button>
-    <template #tip>
-      <div class="el-upload__tip">
-        jpg/png files with a size less than 500kb
-      </div>
-    </template>
-  </el-upload>
+  <div>
+    <el-upload
+      v-model:file-list="fileList"
+      name="uploadProductRotationImg"
+      class="upload-demo"
+      action="/api/product/uploadProductRotationImg"
+      :on-progress="handleProgress"
+      :on-success="handleSuccess"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      list-type="picture"
+    >
+      <el-button type="primary">Click to upload</el-button>
+    </el-upload>
+  </div>
 </template>
 
 <script lang="ts" setup>
