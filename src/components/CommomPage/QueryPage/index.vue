@@ -31,8 +31,14 @@
       </template>
 
       <el-table-column fixed="right" label="操作" width="150">
-        <template #default>
-          <el-button link type="primary" size="small">删除</el-button>
+        <template #default="scope">
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="handleDel(scope.row)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -41,7 +47,7 @@
     </el-button>
     <el-drawer v-model="drawer" direction="rtl">
       <template #title>
-        <h4>{{newlyAdded.label}}</h4>
+        <h4>{{ newlyAdded.label }}</h4>
       </template>
       <template #default>
         <el-form :model="mainObj.param" label-width="100px">
@@ -71,39 +77,54 @@
 <script>
 import { defineComponent, reactive, toRefs, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { queryObj } from "./config";
+import { utilsQuery, utilsSidebar, utilsGetMsg } from "../../../utils";
 import MyForm from "./myForm.vue";
 import MyFormItem from "./myFormItem.vue";
 import MyUpload from "./myUpload.vue";
-import { queryAllMsg } from "@/api/index";
+import { queryAllMsg, deleteData, insertData } from "@/api/index";
 export default defineComponent({
   name: "QueryPage",
   components: { MyForm, MyFormItem, MyUpload },
   setup() {
     const Route = useRoute(); //获取到值
-    let { url, label, path, title, newlyAdded, strikeOut } = Route.query;
-    newlyAdded = JSON.parse(newlyAdded);
-    strikeOut = JSON.parse(strikeOut);
-    const mainObj = reactive(queryObj[Route.params.path]);
+    let { url, label, path, title, newlyAdded, strikeOut } = utilsGetMsg(
+      Route.params.path
+    );
+    // let { url } = Route.query;
+    // newlyAdded = JSON.parse(newlyAdded);
+    // strikeOut = JSON.parse(strikeOut);
+    const mainObj = reactive(utilsQuery[Route.params.path]);
     const mainData = reactive({ tableData: [] });
     const drawer = ref(false);
 
     function mySubmitFun() {
-      console.log("mySubmitFun", Route.query);
+      const { url } = newlyAdded;
+      let res = mainObj.param;
+      let data = {}
+      res.filter((val)=>{ 
+        return Object.keys(val).includes("value") 
+      }).forEach((val)=>{
+        data[val.name]= val.value 
+      });
+      insertData(url, data).then(function (data) {
+        console.log("insertData",data)
+        if (data) initTable();
+      }); 
     }
-    console.log(" Route.query", {
-      url,
-      label,
-      path,
-      title,
-      newlyAdded,
-      strikeOut,
-    });
-    queryAllMsg(url).then(function (data) {
-      mainData.tableData = data;
-    });
-    console.log("Route", Route);
-    console.log("mainData", mainData);
+    const handleDel = (data) => {
+      const { url } = strikeOut;
+      deleteData(url, data).then(function (data) {
+        if (data) initTable();
+      });
+    };
+    const initTable = () => {
+      queryAllMsg(url).then(function (data) {
+        mainData.tableData = data;
+      });
+    };
+    initTable();
+    // console.log("Route", Route);
+    // console.log("mainData", mainData);
     return {
       ...toRefs(Route),
       ...toRefs(mainData),
@@ -111,7 +132,8 @@ export default defineComponent({
       mainData,
       drawer,
       mySubmitFun,
-      newlyAdded
+      newlyAdded,
+      handleDel,
     };
   },
 });

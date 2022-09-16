@@ -8,7 +8,7 @@
     >
       <el-sub-menu
         :index="index + ''"
-        v-for="(item, index) in sidebarList"
+        v-for="(item, index) in utilsSidebar"
         :key="index"
       >
         <template #title>
@@ -37,7 +37,7 @@ import {
   Setting,
 } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
-import { sidebarList } from "./config";
+import { utilsSidebar } from "../../../utils";
 
 interface MenuItem {
   active: object;
@@ -53,15 +53,15 @@ const handleOpen = (key: string, keyPath: string[]) => {
 const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);
 };
-const menuItemClick = (data: MenuItem, val: object) => {
+const menuItemClick = (data: MenuItem, val: any) => {
   let {
     active,
     index,
     indexPath,
   }: { active: object; index: string; indexPath: object } = data;
-  router.push({ name: val.path + "/" + val.title, params: { ...val } });
-  // router.push({ name: val.path, params: { path: val.title, ...val } });
-  console.log("menuItemClick", data, active, index, indexPath, val);
+  // router.push({ path: val.path + "/" + val.title }); 
+  router.push({ path: val.path + "/" + val.title  });
+  // router.push({ name: val.path, params: { path: val.title } }); 
 };
 </script>
 <style scoped>
