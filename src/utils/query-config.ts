@@ -21,7 +21,7 @@ const commentArray: Array<obj> = [
   { name: "commentId", label: "评论ID", elName: "ElInputNumber" },
   { name: "productId", label: "商品ID", elName: "ElInput", value: "" },
   { name: "userName", label: "用户名", elName: "ElInput", value: "" },
-  { name: "createDate ", label: "创建日期", elName: "ElInput", },
+  { name: "createDate ", label: "创建日期", elName: "ElInput"  },
   { name: "commentMsg", label: "评论信息", elName: "ElInput", value: "" },
 ]
 
@@ -75,6 +75,7 @@ export const queryObj: object = {
   "queryAllType": { param: getParam(["typeId", "typeTitle"], typeArray) },
   "queryAllEmerge": { param: getParam(["emergeId", "emergeTag"], emergeArray) },
   "queryAllRotation": { param: getParam(["rotationId", "rotationImg", "productId"], rotationArray) },
+  "queryAllComment": { param: getParam(["commentId", "productId", "userName", "createDate", "commentMsg"], commentArray) },
   "queryAllProduct": {
     param: getParam(["productId", "productName", "productMsg", "productPrice", "productSellingPrice", "productStock",
       "productSalesVolume", "productSize", "productColor", "productEmergeSite", "productName", "productRotationImg", "productMsgImg"], productArray)

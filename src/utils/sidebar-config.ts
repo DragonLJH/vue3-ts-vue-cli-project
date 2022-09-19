@@ -67,7 +67,7 @@ export const sidebarList: Array<sidebarObject> = [
     {
         title: "Comment Controller", label: "评论管理", icon: "", type: "comment", children: [
             {
-                title: "queryAllCOmment", label: "获取所有评论信息", path: "/queryPage", url: "/comment/queryAllCOmment",
+                title: "queryAllComment", label: "获取所有评论信息", path: "/queryPage", url: "/comment/queryAllComment",
                 newlyAdded: { title: "insertComment", label: "新增产品评论信息", url: "/comment/insertComment" },
                 strikeOut: { title: "deleteComment", label: "根据id删除产品评论信息", url: "/comment/deleteComment" }
             },
@@ -112,4 +112,4 @@ export const getMsg = (title: string) => {
 }
 
 
-// module.exports = { sidebarList }
+// module.exports = { sidebarList } 
