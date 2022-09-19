@@ -8,4 +8,7 @@ export function queryAllMsg(url: string): Promise<Object> {
 export function insertData(url: string, data: object): Promise<Object> {
   return myAxios.post(url, data)
 }
+export function deleteData(url: string, data: object): Promise<Object> {
+  return myAxios.post(url, data)
+}
 
