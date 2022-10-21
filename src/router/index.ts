@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [{
       name: 'QueryPage',
       path: '/queryPage/:path',
-      meta: { title: 'QueryPage', icon: 'el-icon-s-home' },  
+      meta: { title: 'QueryPage', icon: 'el-icon-s-home' },
       component: () => import('@/components/CommomPage/QueryPage/index.vue'),
     }]
   },
@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [{
       name: 'UploadPage',
       path: '/uploadPage/:path',
-      meta: { title: 'Upload', icon: 'el-icon-s-home' },  
+      meta: { title: 'Upload', icon: 'el-icon-s-home' },
       component: () => import('@/components/CommomPage/UploadPage/index.vue'),
     }]
   },

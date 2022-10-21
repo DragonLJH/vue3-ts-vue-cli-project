@@ -45,12 +45,12 @@
     <el-button type="primary" style="margin-left: 16px" @click="drawer = true">
       新增
     </el-button>
-    <el-drawer v-model="drawer" direction="rtl">
+    <el-drawer v-model="drawer" direction="rtl" @close="close">
       <template #title>
         <h4>{{ newlyAdded.label }}</h4>
       </template>
       <template #default>
-        <el-form :model="mainObj.param" label-width="100px">
+        <el-form ref="formRef" :model="mainObj.param" label-width="100px">
           <template v-for="(item, index) in mainObj.param">
             <el-form-item
               :label="item.label"
@@ -66,7 +66,7 @@
       </template>
       <template #footer>
         <div style="flex: auto">
-          <el-button>取消</el-button>
+          <el-button @click="drawer = false">取消</el-button>
           <el-button type="primary" @click="mySubmitFun">提交</el-button>
         </div>
       </template>
@@ -86,6 +86,7 @@ export default defineComponent({
   name: "QueryPage",
   components: { MyForm, MyFormItem, MyUpload },
   setup() {
+    const formRef = ref();
     const Route = useRoute(); //获取到值
     let { url, label, path, title, newlyAdded, strikeOut } = utilsGetMsg(
       Route.params.path
@@ -100,31 +101,44 @@ export default defineComponent({
     function mySubmitFun() {
       const { url } = newlyAdded;
       let res = mainObj.param;
-      let data = {}
-      res.filter((val)=>{ 
-        return Object.keys(val).includes("value") 
-      }).forEach((val)=>{
-        data[val.name]= val.value 
+      let data = {};
+      res
+        .filter((val) => {
+          return Object.keys(val).includes("value");
+        })
+        .forEach((val) => {
+          if (val.name.includes("Img")) {
+            let arr = [];
+            val.value.forEach((i) => {
+              arr = [...arr, ...i.response];
+            });
+            data[val.name] = arr;
+          } else {
+            data[val.name] = val.value;
+          }
+        });
+        console.log(url, data)
+      insertData(url, data).then((res) => {
+        if (res) initTable();
       });
-      insertData(url, data).then(function (data) {
-        console.log("insertData",data)
-        if (data) initTable();
-      }); 
     }
     const handleDel = (data) => {
       const { url } = strikeOut;
-      deleteData(url, data).then(function (data) {
-        if (data) initTable();
+      deleteData(url, data).then((res) => {
+        if (res) initTable();
       });
     };
     const initTable = () => {
-      queryAllMsg(url).then(function (data) {
-        mainData.tableData = data;
+      queryAllMsg(url).then((res) => {
+        mainData.tableData = res;
       });
     };
     initTable();
     // console.log("Route", Route);
     // console.log("mainData", mainData);
+    const close = () => {
+      formRef.value.resetFields();
+    };
     return {
       ...toRefs(Route),
       ...toRefs(mainData),
@@ -134,6 +148,8 @@ export default defineComponent({
       mySubmitFun,
       newlyAdded,
       handleDel,
+      formRef,
+      close,
     };
   },
 });
