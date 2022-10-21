@@ -78,7 +78,7 @@ export const queryObj: object = {
   "queryAllComment": { param: getParam(["commentId", "productId", "userName", "createDate", "commentMsg"], commentArray) },
   "queryAllProduct": {
     param: getParam(["productId", "productName", "productMsg", "productPrice", "productSellingPrice", "productStock",
-      "productSalesVolume", "productSize", "productColor", "productEmergeSite", "productName", "productRotationImg", "productMsgImg"], productArray)
+      "productSalesVolume", "productSize", "productColor", "productEmergeSite", "productType", "productRotationImg", "productMsgImg"], productArray)
   },
   "queryAllShop": {
     param: getParam(["shopId", "userName", "productId", "productName", "productRotationImg",
